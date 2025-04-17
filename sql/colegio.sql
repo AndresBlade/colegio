@@ -397,6 +397,7 @@ CREATE TABLE `peticion_justificacion` (
   `empleado_id` int NOT NULL,
   `cargo_id` int NOT NULL,
   `razon` text NOT NULL,
+  `aceptada` tinyint NOT NULL,
   PRIMARY KEY (`fecha`,`empleado_id`,`cargo_id`),
   CONSTRAINT `fk_peticio_justificacion_inasistencia` FOREIGN KEY (`fecha`, `empleado_id`, `cargo_id`) REFERENCES `inasistencia` (`fecha`, `empleado_id`, `cargo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -409,6 +410,57 @@ CREATE TABLE `peticion_justificacion` (
 LOCK TABLES `peticion_justificacion` WRITE;
 /*!40000 ALTER TABLE `peticion_justificacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `peticion_justificacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `peticion_prestamo`
+--
+
+DROP TABLE IF EXISTS `peticion_prestamo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `peticion_prestamo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tipo_remuneracion_id` int NOT NULL,
+  `aceptada` tinyint NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_peticion_prestamo_tipo_remuneracion_idx` (`tipo_remuneracion_id`),
+  CONSTRAINT `fk_peticion_prestamo_tipo_remuneracion` FOREIGN KEY (`tipo_remuneracion_id`) REFERENCES `tipo_remuneracion` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `peticion_prestamo`
+--
+
+LOCK TABLES `peticion_prestamo` WRITE;
+/*!40000 ALTER TABLE `peticion_prestamo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `peticion_prestamo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prestamo`
+--
+
+DROP TABLE IF EXISTS `prestamo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prestamo` (
+  `prestamo_id` int NOT NULL,
+  `dia_aceptacion` date NOT NULL,
+  PRIMARY KEY (`prestamo_id`),
+  CONSTRAINT `fk_prestamo_peticion_prestamo` FOREIGN KEY (`prestamo_id`) REFERENCES `peticion_prestamo` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prestamo`
+--
+
+LOCK TABLES `prestamo` WRITE;
+/*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -578,4 +630,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-15 21:37:41
+-- Dump completed on 2025-04-17  9:41:15
