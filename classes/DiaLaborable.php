@@ -1,5 +1,6 @@
 <?php
-class Horario
+require_once 'DiaSemana.php';
+class DiaLaborable
 {
     public DiaSemana $diaSemana;
     public int $horas;
