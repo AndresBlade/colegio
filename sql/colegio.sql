@@ -29,9 +29,8 @@ CREATE TABLE `cargo` (
   PRIMARY KEY (`id`),
   KEY `fk_cargo_personal_idx` (`personal_id`),
   CONSTRAINT `fk_cargo_personal` FOREIGN KEY (`personal_id`) REFERENCES `personal` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `cargo`
 --
@@ -53,7 +52,7 @@ CREATE TABLE `columna` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +76,7 @@ CREATE TABLE `dia_semana` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +102,7 @@ CREATE TABLE `empleado` (
   `fecha_ingerso` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_empleado_usuario` FOREIGN KEY (`id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +129,7 @@ CREATE TABLE `empleado_cargo` (
   KEY `fk_empleado_subcargo_subcargo_idx` (`cargo_id`),
   CONSTRAINT `fk_empleado_cargo_cargo` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id`),
   CONSTRAINT `fk_empleado_cargo_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='fk_empleado_subcargo_empleado colegio. empleadoo emplead_id id';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='fk_empleado_subcargo_empleado colegio. empleadoo emplead_id id';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +158,7 @@ CREATE TABLE `horario` (
   KEY `fk_horario_dia_semana_idx` (`dia_semana_id`),
   CONSTRAINT `fk_horario_dia_semana` FOREIGN KEY (`dia_semana_id`) REFERENCES `dia_semana` (`id`),
   CONSTRAINT `fk_horario_empleado_cargo` FOREIGN KEY (`empleado_id`, `cargo_id`) REFERENCES `empleado_cargo` (`empleado_id`, `cargo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +187,7 @@ CREATE TABLE `inasistencia` (
   PRIMARY KEY (`fecha`,`empleado_id`,`cargo_id`),
   KEY `fk_inasistencia_empleado_cargo_idx` (`empleado_id`,`cargo_id`),
   CONSTRAINT `fk_inasistencia_empleado_cargo` FOREIGN KEY (`empleado_id`, `cargo_id`) REFERENCES `empleado_cargo` (`empleado_id`, `cargo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +211,7 @@ CREATE TABLE `moneda` (
   `nombre` varchar(45) NOT NULL,
   `simbolo` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='nombre: USD, VES, etc.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='nombre: USD, VES, etc.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +236,7 @@ CREATE TABLE `pago` (
   `fecha` date NOT NULL,
   `tasa` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +267,7 @@ CREATE TABLE `pago_detalle` (
   CONSTRAINT `fk_nomina_detalle_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`),
   CONSTRAINT `fk_nomina_detalle_nomina` FOREIGN KEY (`pago_id`) REFERENCES `pago` (`id`),
   CONSTRAINT `fk_nomina_detalle_tipo_remuneracion_columna` FOREIGN KEY (`tipo_remuneracion_id`, `columna_id`) REFERENCES `tipo_remuneracion_columna` (`tipo_remuneracion_id`, `columna_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +291,7 @@ CREATE TABLE `permiso` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +317,7 @@ CREATE TABLE `permiso_temporal` (
   `razon` text NOT NULL,
   PRIMARY KEY (`empleado_id`),
   CONSTRAINT `fk_permiso_temporal_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +341,7 @@ CREATE TABLE `personal` (
   `nombre` varchar(45) NOT NULL,
   `tipo` tinyint NOT NULL COMMENT '0 normal, 1 por horas',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Personal administrativo, docente, profesor, directivo, obrero. También podrán existir coordinador, aula virtual, etc.';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Personal administrativo, docente, profesor, directivo, obrero. También podrán existir coordinador, aula virtual, etc.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +371,7 @@ CREATE TABLE `personal_tipo_remuneracion` (
   KEY `fk-personal_tipo_remuneracion_tipo_remuneracion_idx` (`remuneracion_id`),
   CONSTRAINT `fk-personal_tipo_remuneracion_tipo_remuneracion` FOREIGN KEY (`remuneracion_id`) REFERENCES `tipo_remuneracion` (`id`),
   CONSTRAINT `fk_personal_tipo_remuneracion_personal` FOREIGN KEY (`personal_id`) REFERENCES `personal` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -400,7 +399,7 @@ CREATE TABLE `peticion_justificacion` (
   `aceptada` tinyint NOT NULL,
   PRIMARY KEY (`fecha`,`empleado_id`,`cargo_id`),
   CONSTRAINT `fk_peticio_justificacion_inasistencia` FOREIGN KEY (`fecha`, `empleado_id`, `cargo_id`) REFERENCES `inasistencia` (`fecha`, `empleado_id`, `cargo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,7 +430,7 @@ CREATE TABLE `peticion_prestamo` (
   KEY `fk_peticion_prestamo_empleado_idx` (`empleado_id`,`cargo_id`),
   CONSTRAINT `fk_peticion_prestamo_empleado` FOREIGN KEY (`empleado_id`, `cargo_id`) REFERENCES `empleado_cargo` (`empleado_id`, `cargo_id`),
   CONSTRAINT `fk_peticion_prestamo_tipo_remuneracion` FOREIGN KEY (`tipo_remuneracion_id`) REFERENCES `tipo_remuneracion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +454,7 @@ CREATE TABLE `prestamo` (
   `dia_aceptacion` date NOT NULL,
   PRIMARY KEY (`prestamo_id`),
   CONSTRAINT `fk_prestamo_peticion_prestamo` FOREIGN KEY (`prestamo_id`) REFERENCES `peticion_prestamo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +478,7 @@ CREATE TABLE `rol` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -505,7 +504,7 @@ CREATE TABLE `rol_permiso` (
   KEY `fk_rol_permiso_permiso_idx` (`permiso_id`),
   CONSTRAINT `fk_rol_permiso_permiso` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
   CONSTRAINT `fk_rol_permiso_rol` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -531,7 +530,7 @@ CREATE TABLE `tipo_remuneracion` (
   PRIMARY KEY (`id`),
   KEY `fk_tipo_remuneracion_moneda_idx` (`moneda_id`),
   CONSTRAINT `fk_tipo_remuneracion_moneda` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -558,7 +557,7 @@ CREATE TABLE `tipo_remuneracion_columna` (
   KEY `fk_tipo_remuneracion_columna_columna_idx` (`columna_id`),
   CONSTRAINT `fk_tipo_remuneracion_columna_columna` FOREIGN KEY (`columna_id`) REFERENCES `columna` (`id`),
   CONSTRAINT `fk_tipo_remuneracion_columna_tipo_remuneracion` FOREIGN KEY (`tipo_remuneracion_id`) REFERENCES `tipo_remuneracion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -586,7 +585,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   KEY `fk_usuario_rol_idx` (`rol_id`),
   CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -613,7 +612,7 @@ CREATE TABLE `vacaciones` (
   PRIMARY KEY (`id`),
   KEY `fk_vacaciones_empleado_idx` (`empleado_id`),
   CONSTRAINT `fk_vacaciones_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
