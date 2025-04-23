@@ -52,7 +52,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="tipo_remuneracion_id" class="form-label">Tipo de Remuneración</label>
-							<select name="form-control" id="tipo_remuneracion_id" class="form-select">
+							<select name="tipo_remuneracion_id" id="tipo_remuneracion_id" class="form-select" required>
 								<?php if(!empty($tiposRemuneracion) && !isset($tiposRemuneracion['error'])): ?>
 									<?php foreach($tiposRemuneracion as $tipo):?>
 										<option value="<?php echo $tipo['id'];?>"><?php echo $tipo['nombre']?></option>
@@ -64,7 +64,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="monto" class="form-label">Monto</label>
-							<input type="number" step="0.01" class="form-control" id="monto" name="monto" required>
+							<input type="number" step="1.00" class="form-control" id="monto" name="monto" required>
 						</div>
 						<button type="submit" class="btn btn-primary">Guardar</button>
 					</form>
@@ -78,15 +78,25 @@
 				<th>Tipo de Remuneración</th>
 				<th>Aceptada</th>
 				<th>Monto</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php if(!empty($prestamos) && !isset($prestamos['error'])) : ?>
 				<?php foreach ($prestamos as $prestamo):?>
 					<tr>
-						<td><?php echo $prestamo['tipo_remuneracion_id'] === 1 ? 'Bono Complementario' : ($prestamo['tipo_remuneracion_id'] === 2 ? 'Bono de Alimentacio' : ($prestamo['tipo_remuneracion_id'] === 3 ? 'Aguinaldo' : 'Sueldo')); ?></td>
+						<td class="d-none"><input type="hidden" value="<?php echo $prestamo['id']?>"></td>
+						<td><?php echo $prestamo['tipo_remuneracion_id'] === 1 ? 'Bono Complementario' : ($prestamo['tipo_remuneracion_id'] === 2 ? 'Bono de Alimentación' : ($prestamo['tipo_remuneracion_id'] === 3 ? 'Aguinaldo' : 'Sueldo')); ?></td>
 						<td class="<?php echo $prestamo['aceptada'] ? 'text-white bg-success' : 'text-white bg-danger'?>"><?php echo $prestamo['aceptada'] ? 'Sí' : 'No'; ?></td>
 						<td><?php echo $prestamo['monto']; ?></td>
+						<td>
+							<form action="../Controllers/PeticionPrestamoController.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta petición?');">
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="id" value="<?php echo $prestamo['id']; ?>">
+								<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+
+							</form>
+						</td>
 					</tr>
 				<?php endforeach;?>	
 			<?php else: ?>
@@ -96,22 +106,30 @@
 			<?php endif; ?>
 		</tbody>
 	</table>
-	<?php if(isset($_GET['error'])): ?>
-		<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" id="alerta">
-			<?php if($_GET['error'] ==1):?>
-				<strong>Error:</strong> Todos los campos son obligatorios.
-				<?php elseif ($_GET['error'] == 2): ?>
-            <strong>Error:</strong> Hubo un problema al guardar la petición. Inténtalo de nuevo.
-			<?php endif; ?>
+	<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+		<div class="alert alert-success alert-dismissible fade show mt-3" role="alert" id="alerta">
+			<strong>Éxito:</strong> La petición de préstamo se guardó correctamente.
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
-		<?php endif; ?>
-		<?php if (isset($_GET['success'])): ?>
-			<div class="alert alert-success alert-dismissible fade show mt-3" role="alert" id="alerta">
-				<strong>Éxito:</strong> La petición de préstamo se guardó correctamente.
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
-		<?php endif; ?>
+	<?php elseif (isset($_GET['success']) && $_GET['success'] == 2): ?>
+		<div class="alert alert-success alert-dismissible fade show mt-3" role="alert" id="alerta">
+			<strong>Éxito:</strong> La petición de préstamo fue eliminada correctamente.
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php endif; ?>
+
+	<?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+		<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" id="alerta">
+			<strong>Error:</strong> Todos los campos son obligatorios.
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php elseif (isset($_GET['error']) && $_GET['error'] == 3): ?>
+		<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" id="alerta">
+			<strong>Error:</strong> No se pudo eliminar la petición de préstamo. Inténtalo de nuevo.
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php endif; ?>
+		
 
 	<script src="../../public/assets/boostrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../public/assets/DataTables/datatables.min.js"></script>
