@@ -20,7 +20,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Petición Prestamo</title>
-	<link rel="stylesheet" href="../../public/assets/vendors/boostrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../public/assets/vendors/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../public/assets/vendors/DataTables/datatables.min.css" >
 </head>
 <body class="bg-light">
@@ -131,7 +131,7 @@
 	<?php endif; ?>
 		
 
-	<script src="../../public/assets/vendors/boostrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../public/assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../public/assets/vendors/DataTables/datatables.min.js"></script>
 
 	<script>
