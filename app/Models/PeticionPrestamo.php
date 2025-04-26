@@ -1,4 +1,4 @@
-<?php 
+<?php
 	class PeticionPrestamo{
 		public int $id;
 		public int $empleadoId;
@@ -22,9 +22,14 @@
 			$this->aceptada=$aceptada;
 			$this->monto=$monto;
 		}
-
+		public function validar(){
+			return !empty($this->empleadoId) && !empty($this->cargoId) && !empty ($this->tipoRemuneracion)&& !empty($this->monto);
+		}
 		public function estado():string{
 			return $this->aceptada ? 'Aceptada' : 'Rechazada';
+		}
+		public function __destruct(){
+			echo "El objeto PeticionPrestamo con ID {$this->id} ha sido destruido.<br>";
 		}
 	}
 ?>

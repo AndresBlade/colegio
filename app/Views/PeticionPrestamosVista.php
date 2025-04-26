@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once '../../config/config.php';
 	require_once '../../app/Controllers/PeticionPrestamoController.php';
 	require_once '../../app/helpers/ObtenerTipoRemuneracion.php';
@@ -55,7 +55,9 @@
 							<select name="tipo_remuneracion_id" id="tipo_remuneracion_id" class="form-select" required>
 								<?php if(!empty($tiposRemuneracion) && !isset($tiposRemuneracion['error'])): ?>
 									<?php foreach($tiposRemuneracion as $tipo):?>
-										<option value="<?php echo $tipo['id'];?>"><?php echo $tipo['nombre']?></option>
+										<option value="<?php echo $tipo['id']; ?>" <?php echo $tipo['id'] == 1 ? 'selected' : ''; ?>>
+                <?php echo $tipo['nombre']; ?>
+            </option>
 									<?php endforeach;?>
 									<?php else: ?>
 								<option value="">No hay tipos de remuneración disponibles</option>
@@ -64,7 +66,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="monto" class="form-label">Monto</label>
-							<input type="number" step="1.00" class="form-control" id="monto" name="monto" required>
+    <input type="number" step="0.01" class="form-control" id="monto" name="monto" min="0.01" required>
 						</div>
 						<button type="submit" class="btn btn-primary">Guardar</button>
 					</form>
@@ -90,15 +92,19 @@
 						<td class="<?php echo $prestamo['aceptada'] ? 'text-white bg-success' : 'text-white bg-danger'?>"><?php echo $prestamo['aceptada'] ? 'Sí' : 'No'; ?></td>
 						<td><?php echo $prestamo['monto']; ?></td>
 						<td>
-							<form action="../Controllers/PeticionPrestamoController.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta petición?');">
-								<input type="hidden" name="_method" value="DELETE">
-								<input type="hidden" name="id" value="<?php echo $prestamo['id']; ?>">
-								<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+							<?php if(!$prestamo['aceptada']):?>
+								<form action="../Controllers/PeticionPrestamoController.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta petición?');">
+							<input type="hidden" name="_method" value="DELETE">
+							<input type="hidden" name="id" value="<?php echo $prestamo['id']; ?>">
+							<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
 
 							</form>
+							<?php else: ?>
+								<span class="text-muted">No disponible</span>
+							<?php endif; ?>
 						</td>
 					</tr>
-				<?php endforeach;?>	
+				<?php endforeach;?>
 			<?php else: ?>
 				<tr>
 					<td colspan="5" class="text-center">No se encontraron préstamos para este empleado.</td>
@@ -129,7 +135,12 @@
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 	<?php endif; ?>
-		
+	<?php if (isset($_GET['error']) && $_GET['error'] == 4): ?>
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <strong>Error:</strong> El campo "Monto" debe ser un número positivo.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+	<?php endif; ?>
 
 	<script src="../../public/assets/boostrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../../public/assets/DataTables/datatables.min.js"></script>
@@ -157,7 +168,7 @@
         url.searchParams.delete('success');
         url.searchParams.delete('error');
         window.history.replaceState({}, document.title, url.toString());
-		
+
 	</script>
 
 </body>

@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/config.php';
+require_once '../Models/PeticionPrestamo.php';
 
 class PeticionPrestamoController{
 	private $conn;
@@ -9,10 +10,10 @@ class PeticionPrestamoController{
 	}
 	public function crearPeticionPrestamo($data){
 		if (
-            empty($data['empleado_id']) ||
-            empty($data['cargo_id']) ||
-            empty($data['tipo_remuneracion_id']) ||
-            empty($data['monto'])
+			!isset($data['empleado_id']) ||
+			!isset($data['cargo_id']) ||
+			!isset($data['tipo_remuneracion_id']) ||
+			!isset($data['monto'])
         ) {
  // Redirigir con un mensaje de error
 			header('Location: ../../app/Views/PeticionPrestamosVista.php?error=1');
@@ -41,7 +42,7 @@ class PeticionPrestamoController{
     }
 	public function obtenerPeticionPrestamo($empleado_id){
 		try{
-			
+
 			$sql = "SELECT * FROM peticion_prestamo WHERE empleado_id = :empleado_id";
 
 			$stmt = $this->conn->prepare($sql);
@@ -69,7 +70,7 @@ class PeticionPrestamoController{
 				return ['error'=> 'La petición no existe o ya fue eliminada'];
 			}
 
-			
+
 			$sql = "DELETE FROM peticion_prestamo WHERE id=:id";
 
 			$stmt = $this->conn->prepare($sql);
@@ -101,7 +102,7 @@ class PeticionPrestamoController{
 		if(isset($_POST['_method']) && $_POST['_method'] === 'DELETE'){
 			$id = $_POST['id'] ?? null;
 			$resultado = $controller->borrarPeticionPrestamo($id);
-			
+
 			if (isset($resultado['success'])) {
 				header('Location: ../../app/Views/PeticionPrestamosVista.php?success=2');
 				exit();
@@ -112,18 +113,48 @@ class PeticionPrestamoController{
 
 		}else{
 
-			// Capturar los datos enviados desde el formulario
-			$data = [
-				'empleado_id' => $_POST['empleado_id'] ?? null,
-				'cargo_id' => $_POST['cargo_id'] ?? null,
-				'tipo_remuneracion_id' => $_POST['tipo_remuneracion_id'] ?? null,
-				'aceptada' => $_POST['aceptada'] ?? false,
-				'monto' => $_POST['monto'] ?? null,
-			];
+			    // Validar y convertir tipo_remuneracion_id
+				$tipoRemuneracion = $_POST['tipo_remuneracion_id'] ?? null;
+
+				if (is_null($tipoRemuneracion) || !is_numeric($tipoRemuneracion)) {
+					header('Location: ../../app/Views/PeticionPrestamosVista.php?error=1');
+					exit();
+				}
+				// Validar y convertir monto
+				$monto = $_POST['monto'] ?? null;
+
+				if (is_null($monto) || !is_numeric($monto) || $monto <= 0) {
+					header('Location: ../../app/Views/PeticionPrestamosVista.php?error=4'); // Error específico para monto
+					exit();
+				}
+				$data = [
+					'empleado_id' => (int) ($_POST['empleado_id'] ?? 0),
+					'cargo_id' => (int) ($_POST['cargo_id'] ?? 0),
+					'tipo_remuneracion_id' => (int) $tipoRemuneracion,
+					'aceptada' => (bool) ($_POST['aceptada'] ?? false),
+					'monto' => (float) ($_POST['monto'] ?? 0),
+				];
+
+				$tipoRemuneracionInt = (int) $tipoRemuneracion;
+
+				// Validar los datos
+				if (
+					!isset($data['empleado_id']) ||
+					!isset($data['cargo_id']) ||
+					!isset($data['tipo_remuneracion_id']) ||
+					!isset($data['monto'])
+				) {
+					header('Location: ../../app/Views/PeticionPrestamosVista.php?error=1');
+					exit();
+				}
+
+
 
 			// Llamar al método para crear la petición
 			$resultado = $controller->crearPeticionPrestamo($data);
 
+			echo "Destruyendo el objeto...<br>";
+			unset($peticion);
 			// Redirigir o mostrar un mensaje según el resultado
 			if (isset($resultado['success'])) {
 				header('Location: ../../app/Views/PeticionPrestamosVista.php?success=1');
