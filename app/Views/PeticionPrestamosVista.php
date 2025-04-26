@@ -20,8 +20,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Petición Prestamo</title>
-	<link rel="stylesheet" href="../../public/assets/boostrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../public/assets/DataTables/datatables.min.css" >
+	<link rel="stylesheet" href="../../public/assets/vendors/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../public/assets/vendors/DataTables/datatables.min.css" >
 </head>
 <body class="bg-light">
 	<div class="container  max-w">
@@ -142,8 +142,8 @@
     </div>
 	<?php endif; ?>
 
-	<script src="../../public/assets/boostrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../../public/assets/DataTables/datatables.min.js"></script>
+	<script src="../../public/assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../public/assets/vendors/DataTables/datatables.min.js"></script>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
