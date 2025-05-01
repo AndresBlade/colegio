@@ -1,0 +1,77 @@
+/* Custom CSS */
+:root {
+  --primary: #1a5276;
+  --primary-light: hsl(204, 64%, 44%);
+  --secondary: #34495e;
+  --secondary-light: #5d6d7e;
+  --text-muted: #7f8c8d;
+}
+
+.background-image {
+  background: linear-gradient(to bottom, rgba(19, 66, 95, 0.8), rgba(19, 66, 95, 0.8)), url('../images/colegio\(1\).jpg');
+  background-size: cover;
+  background-position: right;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.school-name {
+  font-size: 2rem;
+  color: var(--secondary);
+}
+
+.bg-primary {
+background-color: var(--primary) !important;
+}
+
+.btn-secondary {
+background-color: var(--secondary);
+border-color: var(--secondary);
+}
+
+.btn-secondary:hover {
+background-color: var(--secondary-light);
+border-color: var(--secondary-light);
+}
+
+.btn-outline-secondary {
+  color: var(--secondary);
+  border-color: #ced4da;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f8f9fa;
+  color: var(--secondary);
+}
+
+.text-white-80 {
+  opacity: 0.8;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-control:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 0.25rem rgba(41, 128, 185, 0.25);
+}
+
+.fade-out {
+opacity: 0;
+transition: opacity 0.3s ease; /* Duración de 0.5 segundos */
+}
+
+.forgot-password:hover {
+text-decoration: underline !important;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 991.98px) {
+  .login-container {
+      max-width: 350px;
+  }
+}
